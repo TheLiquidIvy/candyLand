@@ -196,11 +196,11 @@ const ContactButton = () => (
     type="submit"
     whileHover={{
       rotate: [0, 2, -2, 1.5, 0],
-      backgroundColor: ["#8A7561", "#A08B72", "#B69C7A", "#CBB59A", "#A08B72", "#8A7561"],
+      backgroundColor: ["#FF1493", "#A08B72", "#B69C7A", "#CBB59A", "#A08B72", "#FF1493"],
       scale: 1.04,
     }}
     transition={{ repeat: Infinity, duration: 2.8, ease: "easeInOut" }}
-    className="mt-6 inline-flex items-center justify-center rounded-full bg-gradient-to-r from-[#8A7561] via-[#A08B72] to-[#CBB59A] px-8 py-3 text-lg font-semibold uppercase tracking-widest text-white shadow-[0_12px_24px_rgba(86,74,60,0.35)]"
+    className="mt-6 inline-flex items-center justify-center rounded-full bg-gradient-to-r from-[#FF1493] via-[#A08B72] to-[#CBB59A] px-8 py-3 text-lg font-semibold uppercase tracking-widest text-white shadow-[0_12px_24px_rgba(86,74,60,0.35)]"
   >
     Send Sugargram
   </motion.button>
@@ -246,12 +246,12 @@ function App() {
   return (
     <main className="relative min-h-screen overflow-hidden bg-gradient-to-br from-[#FFE5F1] via-[#E0F7FF] to-[#F0E5FF] text-[#1a0033]">
       <motion.div
-        className="pointer-events-none absolute -left-48 -top-40 h-80 w-80 rounded-full bg-[#BCAA92]/60 blur-3xl"
+        className="pointer-events-none absolute -left-48 -top-40 h-80 w-80 rounded-full bg-[#FF1493]/40 blur-3xl"
         animate={{ scale: [1, 1.08, 0.94, 1], rotate: [0, 12, -8, 0] }}
         transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
       />
       <motion.div
-        className="pointer-events-none absolute -right-56 top-1/3 h-96 w-96 rounded-full bg-[#A9B6B0]/55 blur-3xl"
+        className="pointer-events-none absolute -right-56 top-1/3 h-96 w-96 rounded-full bg-[#00D9FF]/40 blur-3xl"
         animate={{ scale: [1, 0.95, 1.1, 1], rotate: [0, -10, 16, 0] }}
         transition={{ duration: 22, repeat: Infinity, ease: "easeInOut" }}
       />
@@ -263,7 +263,7 @@ function App() {
               initial={{ opacity: 0, y: -18 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7 }}
-              className="inline-flex items-center gap-3 rounded-full bg-white/60 px-6 py-2 text-sm font-semibold uppercase tracking-[0.3em] text-[#5F5448]"
+              className="inline-flex items-center gap-3 rounded-full bg-gradient-to-r from-[#FFB6C1]/80 to-[#E0D5FF]/80 px-6 py-2 text-sm font-semibold uppercase tracking-[0.3em] text-[#8338EC]"
             >
               Welcome to Candy Heaven
             </motion.span>
@@ -271,7 +271,7 @@ function App() {
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.08 }}
-              className="text-4xl font-black leading-tight text-[#2A211B] drop-shadow-sm md:text-6xl"
+              className="text-4xl font-black leading-tight bg-gradient-to-r from-[#FF1493] via-[#8338EC] to-[#00D9FF] bg-clip-text text-transparent drop-shadow-sm md:text-6xl"
             >
               The most outrageous sweets universe you can taste without a spacesuit.
             </motion.h1>
@@ -279,25 +279,25 @@ function App() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.85, delay: 0.18 }}
-              className="max-w-xl text-lg text-[#4A4034]"
+              className="max-w-xl text-lg text-[#555]"
             >
               Our sugar scientists engineer kaleidoscopic confections, hovering lollipops, and confetti-powered candy that makes every celebration explode with flavor.
             </motion.p>
             <div className="flex flex-wrap items-center gap-6">
               <CandyExploder label="Tap for Confetti Candy" />
               <motion.div
-                className="flex items-center gap-3 rounded-full bg-white/60 px-5 py-3 text-sm font-semibold text-[#4A4034]"
+                className="flex items-center gap-3 rounded-full bg-gradient-to-r from-[#FFB6C1]/70 to-[#E0D5FF]/70 px-5 py-3 text-sm font-semibold text-[#8338EC]"
                 animate={{ y: [0, -4, 0], rotate: [0, 1.5, -1.5, 0] }}
                 transition={{ repeat: Infinity, duration: 6.5, ease: "easeInOut" }}
               >
-                <span className="inline-block h-3 w-3 rounded-full bg-[#8A7561]" />
+                <span className="inline-block h-3 w-3 rounded-full bg-[#FF1493]" />
                 Mega mix drops nightly
               </motion.div>
             </div>
           </div>
           <div className="relative flex items-center justify-center">
             <motion.div
-              className="relative flex h-80 w-80 items-center justify-center rounded-full bg-white/45 backdrop-blur"
+              className="relative flex h-80 w-80 items-center justify-center rounded-full bg-white/80 backdrop-blur"
               animate={{ rotate: [0, 360] }}
               transition={{ repeat: Infinity, duration: 24, ease: "linear" }}
             >
@@ -305,7 +305,7 @@ function App() {
                 className="absolute h-64 w-64 rounded-full border-[18px] border-transparent"
                 style={{
                   background:
-                    "conic-gradient(from 90deg, #9BAFA7, #D8C3A5, #B0B7B5, #DED3C3, #A09482, #9BAFA7)",
+                    "conic-gradient(from 90deg, #FF1493, #8338EC, #3A86FF, #00D9FF, #FFBE0B, #FF1493)",
                 }}
                 animate={{ rotate: [0, -360] }}
                 transition={{ repeat: Infinity, duration: 32, ease: "linear" }}
@@ -332,12 +332,12 @@ function App() {
           </div>
         </section>
 
-        <section className="rounded-3xl bg-white/70 p-10 shadow-[0_20px_45px_rgba(63,55,39,0.18)] backdrop-blur">
+        <section className="rounded-3xl bg-gradient-to-br from-white/90 to-[#FFE5F1]/80 p-10 shadow-[0_20px_45px_rgba(255,20,147,0.15)] backdrop-blur">
           <header className="flex flex-col gap-4 pb-8 text-center">
-            <h2 className="text-3xl font-black uppercase tracking-[0.2em] text-[#2A211B] md:text-4xl">
+            <h2 className="text-3xl font-black uppercase tracking-[0.2em] bg-gradient-to-r from-[#FF1493] to-[#8338EC] bg-clip-text text-transparent md:text-4xl">
               Candy Constellation Tasting Flight
             </h2>
-            <p className="mx-auto max-w-2xl text-[#4A4034]/85">
+            <p className="mx-auto max-w-2xl text-[#555]">
               Drag the jars to awaken the sugar sprites. Each spill unleashes a cascade of virtual sweets so vibrant your screen might need a nap.
             </p>
           </header>
@@ -355,7 +355,7 @@ function App() {
                   className="relative flex h-full flex-col items-center gap-6 rounded-3xl bg-gradient-to-br from-white to-[#F1ECE4] p-6 shadow-[0_16px_40px_rgba(63,55,39,0.18)]"
                 >
                   <motion.div
-                    className="relative flex h-48 w-40 items-center justify-end overflow-hidden rounded-[60px] border-[6px] border-white/80 bg-white/65"
+                    className="relative flex h-48 w-40 items-center justify-end overflow-hidden rounded-[60px] border-[6px] border-white bg-gradient-to-br from-white to-[#FFE5F1]/30"
                     animate={{ rotate: isActive ? 5 : 0 }}
                     transition={{ type: "spring", stiffness: 110, damping: 13 }}
                   >
@@ -397,9 +397,9 @@ function App() {
                     </AnimatePresence>
                   </motion.div>
                   <div className="space-y-3 text-center">
-                    <h3 className="text-2xl font-extrabold text-[#342A20]">{jar.name}</h3>
-                    <p className="text-sm uppercase tracking-[0.25em] text-[#5C5246]/80">{jar.flavor}</p>
-                    <p className="text-sm text-[#4A4034]/75">{jar.description}</p>
+                    <h3 className="text-2xl font-extrabold text-[#333]">{jar.name}</h3>
+                    <p className="text-sm uppercase tracking-[0.25em] text-[#8338EC]/80">{jar.flavor}</p>
+                    <p className="text-sm text-[#555]/75">{jar.description}</p>
                   </div>
                 </motion.article>
               );
@@ -409,24 +409,24 @@ function App() {
 
         <section className="grid gap-12 lg:grid-cols-[0.9fr_1.1fr]">
           <motion.div
-            className="relative rounded-3xl bg-white/75 p-8 shadow-[0_18px_42px_rgba(58,50,40,0.18)] backdrop-blur"
+            className="relative rounded-3xl bg-gradient-to-br from-white/90 to-[#E0D5FF]/80 p-8 shadow-[0_18px_42px_rgba(131,56,236,0.15)] backdrop-blur"
             initial={{ opacity: 0, x: -40 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, amount: 0.3 }}
             transition={{ duration: 0.7 }}
           >
-            <h2 className="text-3xl font-black uppercase tracking-[0.25em] text-[#2A211B]">
+            <h2 className="text-3xl font-black uppercase tracking-[0.25em] bg-gradient-to-r from-[#FF1493] to-[#8338EC] bg-clip-text text-transparent">
               Raving Tastebuds
             </h2>
-            <p className="mt-4 text-[#4A4034]/85">
+            <p className="mt-4 text-[#555]">
               Our fans bounce higher than the candy corn avatars they send us. Slide through the testimonials and feel the sugar rush!
             </p>
-            <div className="mt-6 flex items-center gap-3 text-sm uppercase tracking-[0.3em] text-[#5C5246]/70">
-              <span className="inline-block h-2 w-2 rounded-full bg-[#8A7561]" />
+            <div className="mt-6 flex items-center gap-3 text-sm uppercase tracking-[0.3em] text-[#8338EC]">
+              <span className="inline-block h-2 w-2 rounded-full bg-[#FF1493]" />
               Autoplay carousel • Touch to pause
             </div>
           </motion.div>
-          <div className="relative rounded-3xl bg-white/80 p-8 shadow-[0_18px_42px_rgba(58,50,40,0.2)] backdrop-blur">
+          <div className="relative rounded-3xl bg-gradient-to-br from-white/90 to-[#FFE5F1]/80 p-8 shadow-[0_18px_42px_rgba(255,20,147,0.15)] backdrop-blur">
             <AnimatePresence mode="wait">
               {testimonials.map((testimonial, index) =>
                 index === testimonialIndex ? (
@@ -441,13 +441,13 @@ function App() {
                     <div className="flex items-start justify-center">
                       <CandyCornAvatar color={testimonial.color} />
                     </div>
-                    <div className="space-y-4 text-[#342A20]">
+                    <div className="space-y-4 text-[#333]">
                       <p className="text-xl font-semibold leading-relaxed">
                         “{testimonial.quote}”
                       </p>
                       <div>
                         <p className="text-base font-bold">{testimonial.name}</p>
-                        <p className="text-sm uppercase tracking-[0.25em] text-[#5C5246]/70">
+                        <p className="text-sm uppercase tracking-[0.25em] text-[#8338EC]/70">
                           {testimonial.title}
                         </p>
                       </div>
@@ -463,7 +463,7 @@ function App() {
                   type="button"
                   onClick={() => setTestimonialIndex(index)}
                   className={`h-2.5 rounded-full transition-all duration-300 ${
-                    testimonialIndex === index ? "w-10 bg-[#8A7561]" : "w-4 bg-[#D9D0C4]"
+                    testimonialIndex === index ? "w-10 bg-[#FF1493]" : "w-4 bg-[#FFB6C1]"
                   }`}
                 />
               ))}
@@ -473,10 +473,10 @@ function App() {
 
         <section className="rounded-3xl bg-white/75 p-10 shadow-[0_18px_45px_rgba(63,55,39,0.18)] backdrop-blur">
           <header className="grid gap-4 text-center">
-            <h2 className="text-3xl font-black uppercase tracking-[0.22em] text-[#2A211B]">
+            <h2 className="text-3xl font-black uppercase tracking-[0.22em] text-[#333]">
               Candy Quest Challenge
             </h2>
-            <p className="mx-auto max-w-3xl text-[#4A4034]/85">
+            <p className="mx-auto max-w-3xl text-[#555]/85">
               Who crafts the most delicious treats for sweet tooths everywhere? Take the quest and unlock your sugar destiny.
             </p>
           </header>
@@ -489,13 +489,13 @@ function App() {
                 whileHover={{ scale: 1.03, rotate: [0, 1.4, -1.4, 0] }}
                 whileTap={{ scale: 0.97 }}
                 className={`relative flex flex-col gap-3 rounded-2xl border-2 border-transparent bg-gradient-to-br from-white to-[#F0E8DC] p-6 text-left shadow-[0_14px_34px_rgba(63,55,39,0.16)] transition-colors ${
-                  questChoice === option.id ? "border-[#8A7561]" : "border-white/0"
+                  questChoice === option.id ? "border-[#FF1493]" : "border-white/0"
                 }`}
               >
-                <span className="text-xs uppercase tracking-[0.4em] text-[#5C5246]/70">{option.label}</span>
-                <span className="text-lg font-semibold text-[#342A20]">{option.description}</span>
+                <span className="text-xs uppercase tracking-[0.4em] text-[#8338EC]/70">{option.label}</span>
+                <span className="text-lg font-semibold text-[#333]">{option.description}</span>
                 <motion.div
-                  className="absolute -right-3 -top-3 flex h-12 w-12 items-center justify-center rounded-full bg-[#D9CBB6] text-lg font-black text-[#342A20]"
+                  className="absolute -right-3 -top-3 flex h-12 w-12 items-center justify-center rounded-full bg-[#D9CBB6] text-lg font-black text-[#333]"
                   animate={{ rotate: questChoice === option.id ? [0, -10, 10, 0] : 0 }}
                   transition={{ repeat: questChoice === option.id ? Infinity : 0, duration: 2.1, ease: "easeInOut" }}
                 >
@@ -511,13 +511,13 @@ function App() {
                 initial={{ opacity: 0, y: 26 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: 26 }}
-                className="mt-10 rounded-2xl bg-white/80 p-8 text-center text-[#342A20]"
+                className="mt-10 rounded-2xl bg-white/80 p-8 text-center text-[#333]"
               >
                 <h3 className="text-2xl font-black uppercase tracking-[0.25em]">
                   {selectedQuestMessage.title}
                 </h3>
                 <p className="mt-4 text-lg">{selectedQuestMessage.body}</p>
-                <div className="mt-6 flex flex-wrap justify-center gap-3 text-sm font-semibold uppercase tracking-[0.25em] text-[#5C5246]/80">
+                <div className="mt-6 flex flex-wrap justify-center gap-3 text-sm font-semibold uppercase tracking-[0.25em] text-[#8338EC]/80">
                   {selectedQuestMessage.menu.map((item) => (
                     <span key={item} className="rounded-full bg-white/60 px-4 py-2">
                       {item}
@@ -541,44 +541,44 @@ function App() {
             transition={{ duration: 16, repeat: Infinity, ease: "easeInOut" }}
           />
           <div className="relative grid gap-10 lg:grid-cols-2">
-            <div className="space-y-6 text-[#342A20]">
+            <div className="space-y-6 text-[#333]">
               <h2 className="text-3xl font-black uppercase tracking-[0.25em]">
                 Holler at the Candy Alchemists
               </h2>
-              <p className="text-lg text-[#4A4034]/85">
+              <p className="text-lg text-[#555]/85">
                 Drop us a line and we’ll assemble a rainbow-tinted tasting flight faster than you can say "sherbet supernova".
               </p>
-              <div className="flex flex-wrap gap-3 text-sm font-semibold uppercase tracking-[0.3em] text-[#5C5246]/70">
+              <div className="flex flex-wrap gap-3 text-sm font-semibold uppercase tracking-[0.3em] text-[#8338EC]/70">
                 <span className="rounded-full bg-white/55 px-4 py-2">Parties</span>
                 <span className="rounded-full bg-white/55 px-4 py-2">Corporate Mischief</span>
                 <span className="rounded-full bg-white/55 px-4 py-2">Event Kits</span>
               </div>
             </div>
-            <form className="relative flex flex-col gap-4 text-[#342A20]">
+            <form className="relative flex flex-col gap-4 text-[#333]">
               <div className="grid gap-3 md:grid-cols-2">
-                <label className="flex flex-col gap-2 text-sm uppercase tracking-[0.25em] text-[#5C5246]">
+                <label className="flex flex-col gap-2 text-sm uppercase tracking-[0.25em] text-[#8338EC]">
                   Name
                   <input
-                    className="rounded-full border-none bg-white px-5 py-3 text-base font-medium text-[#342A20] outline-none focus:ring-4 focus:ring-[#B69C7A]/35"
+                    className="rounded-full border-none bg-white px-5 py-3 text-base font-medium text-[#333] outline-none focus:ring-4 focus:ring-[#B69C7A]/35"
                     placeholder="Your sweet alias"
                     required
                   />
                 </label>
-                <label className="flex flex-col gap-2 text-sm uppercase tracking-[0.25em] text-[#5C5246]">
+                <label className="flex flex-col gap-2 text-sm uppercase tracking-[0.25em] text-[#8338EC]">
                   Email
                   <input
                     type="email"
-                    className="rounded-full border-none bg-white px-5 py-3 text-base font-medium text-[#342A20] outline-none focus:ring-4 focus:ring-[#A7B3C2]/35"
+                    className="rounded-full border-none bg-white px-5 py-3 text-base font-medium text-[#333] outline-none focus:ring-4 focus:ring-[#A7B3C2]/35"
                     placeholder="you@candyfans.com"
                     required
                   />
                 </label>
               </div>
-              <label className="flex flex-col gap-2 text-sm uppercase tracking-[0.25em] text-[#5C5246]">
+              <label className="flex flex-col gap-2 text-sm uppercase tracking-[0.25em] text-[#8338EC]">
                 Message
                 <textarea
                   rows={4}
-                  className="rounded-3xl border-none bg-white px-5 py-4 text-base font-medium text-[#342A20] outline-none focus:ring-4 focus:ring-[#C3D0CA]/35"
+                  className="rounded-3xl border-none bg-white px-5 py-4 text-base font-medium text-[#333] outline-none focus:ring-4 focus:ring-[#C3D0CA]/35"
                   placeholder="Tell us how wild you want your candy storm"
                 />
               </label>
@@ -587,7 +587,7 @@ function App() {
           </div>
         </section>
 
-        <footer className="flex flex-col items-center gap-3 pb-8 text-xs uppercase tracking-[0.3em] text-[#5C5246]/80">
+        <footer className="flex flex-col items-center gap-3 pb-8 text-xs uppercase tracking-[0.3em] text-[#8338EC]/80">
           <span>© {new Date().getFullYear()} Candy Heaven • Where outrageous sugar dreams spin to life</span>
           <span className="flex items-center gap-2">
             <span className="inline-block h-2 w-2 animate-pulse rounded-full bg-[#B69C7A]" />
