@@ -206,6 +206,118 @@ const ContactButton = () => (
   </motion.button>
 );
 
+const RacingCar = () => (
+  <motion.div
+    className="pointer-events-none fixed top-1/4 left-0 z-40 text-4xl"
+    animate={{ x: ["calc(-100% - 100px)", "calc(100vw + 100px)"] }}
+    transition={{ duration: 6, ease: "linear", repeat: Infinity, repeatDelay: 8 }}
+  >
+    <div className="flex items-center gap-2">
+      <span>🏎️</span>
+      <motion.div animate={{ rotate: [0, 360] }} transition={{ duration: 0.5, repeat: Infinity }}>
+        ⚡
+      </motion.div>
+    </div>
+  </motion.div>
+);
+
+const Unicorn = ({ index }: { index: number }) => (
+  <motion.div
+    className="pointer-events-none fixed z-30 text-5xl"
+    style={{
+      left: `${Math.sin(index) * 40 + 50}%`,
+      top: `${Math.cos(index) * 30 + 20}%`,
+    }}
+    animate={{
+      y: [0, -30, 0],
+      rotate: [0, 5, -5, 0],
+      scale: [1, 1.1, 1],
+    }}
+    transition={{
+      duration: 3 + index * 0.5,
+      repeat: Infinity,
+      delay: index * 0.8,
+    }}
+  >
+    🦄
+  </motion.div>
+);
+
+const RandomFireworks = () => {
+  const [fireworks, setFireworks] = useState<{ id: string; x: number; y: number }[]>([]);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const newFirework = {
+        id: Math.random().toString(),
+        x: Math.random() * 100,
+        y: Math.random() * 100,
+      };
+      setFireworks((prev) => [...prev, newFirework]);
+      setTimeout(() => {
+        setFireworks((prev) => prev.filter((f) => f.id !== newFirework.id));
+      }, 2000);
+    }, 2500);
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <>
+      {fireworks.map((firework) => (
+        <motion.div
+          key={firework.id}
+          className="pointer-events-none fixed z-20"
+          style={{ left: `${firework.x}%`, top: `${firework.y}%` }}
+        >
+          {["💥", "✨", "⭐", "🌟"].map((emoji, i) => (
+            <motion.span
+              key={i}
+              className="absolute text-3xl"
+              initial={{ x: 0, y: 0, opacity: 1 }}
+              animate={{
+                x: (Math.random() - 0.5) * 200,
+                y: (Math.random() - 0.5) * 200,
+                opacity: 0,
+                scale: [1, 0.5],
+              }}
+              transition={{ duration: 1.5, ease: "easeOut" }}
+            >
+              {emoji}
+            </motion.span>
+          ))}
+        </motion.div>
+      ))}
+    </>
+  );
+};
+
+const FloatingStars = () => (
+  <>
+    {Array.from({ length: 8 }).map((_, i) => (
+      <motion.div
+        key={i}
+        className="pointer-events-none fixed z-10 text-2xl"
+        style={{
+          left: `${Math.random() * 100}%`,
+          top: `${Math.random() * 100}%`,
+        }}
+        animate={{
+          y: [0, -20, 0],
+          rotate: [0, 360],
+          opacity: [0.5, 1, 0.5],
+        }}
+        transition={{
+          duration: 4 + Math.random() * 3,
+          repeat: Infinity,
+          delay: i * 0.5,
+        }}
+      >
+        ⭐
+      </motion.div>
+    ))}
+  </>
+);
+
 function App() {
   const [activeJar, setActiveJar] = useState<string | null>(null);
   const [questChoice, setQuestChoice] = useState<string | null>(null);
@@ -245,6 +357,13 @@ function App() {
 
   return (
     <main className="relative min-h-screen overflow-hidden bg-gradient-to-br from-[#FFE5F1] via-[#E0F7FF] to-[#F0E5FF] text-[#1a0033]">
+      <RandomFireworks />
+      <FloatingStars />
+      <RacingCar />
+      {Array.from({ length: 3 }).map((_, i) => (
+        <Unicorn key={i} index={i} />
+      ))}
+      
       <motion.div
         className="pointer-events-none absolute -left-48 -top-40 h-80 w-80 rounded-full bg-[#FF1493]/40 blur-3xl"
         animate={{ scale: [1, 1.08, 0.94, 1], rotate: [0, 12, -8, 0] }}
