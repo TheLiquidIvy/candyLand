@@ -402,6 +402,52 @@ const HiddenEasterEgg = ({ show }: { show: boolean }) => (
   </AnimatePresence>
 );
 
+const ScreenShake = ({ active }: { active: boolean }) => (
+  <motion.div
+    animate={active ? { x: [0, -10, 10, -10, 10, 0], rotate: [0, 2, -2, 2, -2, 0] } : { x: 0, rotate: 0 }}
+    transition={{ duration: 0.5 }}
+    className="w-full h-full"
+  />
+);
+
+const ClickConfetti = ({ x, y }: { x: number; y: number }) => (
+  <>
+    {Array.from({ length: 12 }).map((_, i) => (
+      <motion.span
+        key={i}
+        className="pointer-events-none fixed text-2xl"
+        style={{ left: x, top: y }}
+        initial={{ opacity: 1, scale: 1 }}
+        animate={{
+          x: (Math.random() - 0.5) * 300,
+          y: Math.random() * -300,
+          opacity: 0,
+          scale: 0,
+          rotate: Math.random() * 360,
+        }}
+        transition={{ duration: 1.5, ease: "easeOut" }}
+      >
+        {["🎉", "✨", "⭐", "🎊", "💥", "🌟"][Math.floor(Math.random() * 6)]}
+      </motion.span>
+    ))}
+  </>
+);
+
+const AchievementBadge = ({ count }: { count: number }) => (
+  <motion.div
+    className="pointer-events-none fixed top-6 right-6 z-50"
+    animate={{ y: [0, -5, 0] }}
+    transition={{ repeat: Infinity, duration: 2 }}
+  >
+    <div className="rounded-full bg-gradient-to-r from-[#FF1493] to-[#8338EC] p-4 shadow-lg">
+      <div className="text-center">
+        <div className="text-2xl font-bold text-white">{count}</div>
+        <div className="text-xs text-white uppercase tracking-widest">Magic Found</div>
+      </div>
+    </div>
+  </motion.div>
+);
+
 function App() {
   const [activeJar, setActiveJar] = useState<string | null>(null);
   const [questChoice, setQuestChoice] = useState<string | null>(null);
@@ -409,6 +455,11 @@ function App() {
   const [titleClicks, setTitleClicks] = useState(0);
   const [showHiddenMessage, setShowHiddenMessage] = useState(false);
   const [clickedUnicorns, setClickedUnicorns] = useState(0);
+  const [clickConfetti, setClickConfetti] = useState<{ x: number; y: number; id: string } | null>(null);
+  const [screenShake, setScreenShake] = useState(false);
+  const [achievementCount, setAchievementCount] = useState(0);
+  const konamiSequence = useRef<string[]>([]);
+  const konamiCode = ["ArrowUp", "ArrowUp", "ArrowDown", "ArrowDown", "ArrowLeft", "ArrowRight", "ArrowLeft", "ArrowRight", "b", "a"];
 
   const heroCandy = useMemo(
     () =>
@@ -425,6 +476,32 @@ function App() {
     }, 4800);
     return () => clearInterval(interval);
   }, []);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      konamiSequence.current.push(e.key);
+      if (konamiSequence.current.length > konamiCode.length) {
+        konamiSequence.current.shift();
+      }
+      if (JSON.stringify(konamiSequence.current) === JSON.stringify(konamiCode)) {
+        playSoundEffect("wow");
+        setScreenShake(true);
+        setTimeout(() => setScreenShake(false), 500);
+        setAchievementCount(c => c + 1);
+        konamiSequence.current = [];
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, []);
+
+  const handleAnywherClick = (e: React.MouseEvent) => {
+    if ((e.target as HTMLElement).closest("button, a, input, textarea")) return;
+    const id = Math.random().toString();
+    setClickConfetti({ x: e.clientX, y: e.clientY, id });
+    playSoundEffect("pop");
+    setTimeout(() => setClickConfetti(null), 1500);
+  };
 
   const selectedQuestMessage = useMemo(() => {
     if (!questChoice) return null;
@@ -443,14 +520,25 @@ function App() {
   }, [questChoice]);
 
   return (
-    <main className="relative min-h-screen overflow-hidden bg-gradient-to-br from-[#FFE5F1] via-[#E0F7FF] to-[#F0E5FF] text-[#1a0033]">
+    <main 
+      className="relative min-h-screen overflow-hidden bg-gradient-to-br from-[#FFE5F1] via-[#E0F7FF] to-[#F0E5FF] text-[#1a0033]"
+      onClick={(e) => {
+        handleAnywherClick(e);
+        if (screenShake) {
+          setScreenShake(true);
+          setTimeout(() => setScreenShake(false), 500);
+        }
+      }}
+    >
       <RandomFireworks />
       <FloatingStars />
-      <RacingCar onClickCar={() => { playSoundEffect("woosh"); playSoundEffect("wow"); }} />
+      <RacingCar onClickCar={() => { playSoundEffect("woosh"); playSoundEffect("wow"); setScreenShake(true); setTimeout(() => setScreenShake(false), 400); setAchievementCount(c => c + 1); }} />
       {Array.from({ length: 3 }).map((_, i) => (
-        <Unicorn key={i} index={i} onClickUnicorn={() => { setClickedUnicorns(c => c + 1); }} />
+        <Unicorn key={i} index={i} onClickUnicorn={() => { setClickedUnicorns(c => c + 1); setAchievementCount(a => a + 1); }} />
       ))}
       <HiddenEasterEgg show={clickedUnicorns >= 3 || titleClicks >= 5} />
+      {clickConfetti && <ClickConfetti x={clickConfetti.x} y={clickConfetti.y} />}
+      {achievementCount > 0 && <AchievementBadge count={achievementCount} />}
       
       <motion.div
         className="pointer-events-none absolute -left-48 -top-40 h-80 w-80 rounded-full bg-[#FF1493]/40 blur-3xl"
@@ -478,13 +566,32 @@ function App() {
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.08 }}
-              className="easter-egg-clicker text-4xl font-black leading-tight bg-gradient-to-r from-[#FF1493] via-[#8338EC] to-[#00D9FF] bg-clip-text text-transparent drop-shadow-sm md:text-6xl cursor-pointer"
+              className="easter-egg-clicker text-4xl font-black leading-tight drop-shadow-sm md:text-6xl cursor-pointer"
+              style={{
+                backgroundImage: "linear-gradient(90deg, #FF1493, #8338EC, #3A86FF, #00D9FF, #FF1493)",
+                backgroundSize: "200% 200%",
+              }}
+              animate={{ backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"] }}
+              transition={{ duration: 3, repeat: Infinity }}
               onClick={() => {
                 setTitleClicks(t => t + 1);
                 playSoundEffect(["pop", "success", "giggle"][titleClicks % 3] as any);
+                setScreenShake(true);
+                setTimeout(() => setScreenShake(false), 300);
+                setAchievementCount(a => a + 1);
               }}
             >
-              The most outrageous sweets universe you can taste without a spacesuit.
+              <motion.span
+                className="bg-clip-text text-transparent"
+                style={{
+                  backgroundImage: "linear-gradient(90deg, #FF1493, #8338EC, #3A86FF, #00D9FF, #FF1493)",
+                  backgroundSize: "200% 200%",
+                }}
+                animate={{ backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"] }}
+                transition={{ duration: 3, repeat: Infinity }}
+              >
+                The most outrageous sweets universe you can taste without a spacesuit.
+              </motion.span>
             </motion.h1>
             <motion.p
               initial={{ opacity: 0, y: 20 }}
