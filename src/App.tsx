@@ -1,9 +1,9 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 
-const confettiPalette = ["#B8B2A6", "#D4CAB0", "#9BA6A0", "#C3D0CA", "#8A7561", "#A7B3C2", "#E3D9C5"];
+const confettiPalette = ["#FF006E", "#FB5607", "#FFBE0B", "#8338EC", "#3A86FF", "#FF4365", "#FB85FF", "#00D9FF"];
 
-const heroCandyPalette = ["#D9CBB6", "#B6C2BB", "#E8DCC7", "#C3B09D", "#9BAFA7", "#D4BBA1"];
+const heroCandyPalette = ["#FF1493", "#FFB6C1", "#FF69B4", "#00CED1", "#7B68EE", "#FFDF00", "#FF6347", "#20B2AA"];
 
 type ConfettiPiece = {
   id: string;
@@ -41,25 +41,25 @@ const candyJars: CandyJar[] = [
     id: "nebula-nibbles",
     name: "Nebula Nibbles",
     flavor: "Cosmic Berry Swirl",
-    accentClass: "from-[#B79F83] via-[#D5C4AB] to-[#E6D7C4]",
+    accentClass: "from-[#8338EC] via-[#FB5607] to-[#FF1493]",
     description: "A galaxy of popping candy clusters that shimmer and sparkle with every bite.",
-    sweets: ["#B79F83", "#E6D7C4", "#A7B3C2", "#9BA6A0"],
+    sweets: ["#8338EC", "#FF1493", "#FB5607", "#FFB6C1"],
   },
   {
     id: "glow-glaze",
     name: "Glow Glaze Gems",
     flavor: "Electric Citrus",
-    accentClass: "from-[#9BA6A0] via-[#C3D0CA] to-[#E4DCCF]",
+    accentClass: "from-[#FFBE0B] via-[#3A86FF] to-[#00D9FF]",
     description: "Translucent gems that crackle into citrus fizz and rainbow sugar dust.",
-    sweets: ["#9BA6A0", "#C3D0CA", "#E4DCCF", "#B69C7A"],
+    sweets: ["#FFBE0B", "#00D9FF", "#3A86FF", "#7B68EE"],
   },
   {
     id: "bubble-bonanza",
     name: "Bubble Bonanza",
     flavor: "Tropical Bubbleblast",
-    accentClass: "from-[#A7B3C2] via-[#D4CAB0] to-[#EBDCC8]",
+    accentClass: "from-[#FF69B4] via-[#20B2AA] to-[#FFB6C1]",
     description: "Chewy spheres bursting with tropical mist and a shower of glitter sprinkles.",
-    sweets: ["#A7B3C2", "#D4CAB0", "#EBDCC8", "#8A7561"],
+    sweets: ["#FF69B4", "#FFB6C1", "#20B2AA", "#7B68EE"],
   },
 ];
 
@@ -69,21 +69,21 @@ const testimonials: Testimonial[] = [
     title: "Chief Sweet Officer, Sugar Syndicate",
     quote:
       "Candy Heaven's treats are so dazzling our office snack table turned into a full-time celebration. The lollipop lounge is now our official meeting room!",
-    color: "#B69C7A",
+    color: "#FF1493",
   },
   {
     name: "Nova Crunch",
     title: "Galaxy Entertainer",
     quote:
       "The Glow Glaze Gems light up my backstage rider. Fans chase me down just to trade autographs for their next handful!",
-    color: "#9BA6A0",
+    color: "#00D9FF",
   },
   {
     name: "Benny Bounce",
     title: "Professional Party Curator",
     quote:
       "I've traded confetti cannons for Candy Heaven jars. The spill animation alone gets guests squealing before we even serve dessert!",
-    color: "#D4CAB0",
+    color: "#FFBE0B",
   },
 ];
 
@@ -133,7 +133,7 @@ const CandyExploder = ({ label }: { label: string }) => {
         onClick={triggerConfetti}
         whileHover={{ scale: 1.1, rotate: 2 }}
         whileTap={{ scale: 0.96, rotate: -4 }}
-        className="relative rounded-full bg-gradient-to-r from-[#8A7561] via-[#B69C7A] to-[#D8C3A5] px-5 py-3 font-semibold uppercase tracking-wide text-white shadow-[0_12px_28px_rgba(84,70,54,0.35)]"
+        className="relative rounded-full bg-gradient-to-r from-[#FF1493] via-[#FB5607] to-[#8338EC] px-5 py-3 font-semibold uppercase tracking-wide text-white shadow-[0_12px_28px_rgba(255,20,147,0.5)]"
       >
         {label}
       </motion.button>
@@ -244,7 +244,7 @@ function App() {
   }, [questChoice]);
 
   return (
-    <main className="relative min-h-screen overflow-hidden bg-gradient-to-br from-[#F3EFE9] via-[#E3DED2] to-[#CFD7D6] text-[#2F2720]">
+    <main className="relative min-h-screen overflow-hidden bg-gradient-to-br from-[#FFE5F1] via-[#E0F7FF] to-[#F0E5FF] text-[#1a0033]">
       <motion.div
         className="pointer-events-none absolute -left-48 -top-40 h-80 w-80 rounded-full bg-[#BCAA92]/60 blur-3xl"
         animate={{ scale: [1, 1.08, 0.94, 1], rotate: [0, 12, -8, 0] }}
