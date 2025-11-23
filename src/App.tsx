@@ -1,6 +1,52 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 
+// Sound effects using Web Audio API
+const playSound = (frequency: number, duration: number = 100, type: "sine" | "square" = "sine") => {
+  try {
+    const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
+    const oscillator = audioContext.createOscillator();
+    const gainNode = audioContext.createGain();
+    oscillator.connect(gainNode);
+    gainNode.connect(audioContext.destination);
+    oscillator.frequency.value = frequency;
+    oscillator.type = type;
+    gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + duration / 1000);
+    oscillator.start(audioContext.currentTime);
+    oscillator.stop(audioContext.currentTime + duration / 1000);
+  } catch (e) {
+    // Audio context not supported
+  }
+};
+
+const playSoundEffect = (type: "success" | "pop" | "woosh" | "wow" | "giggle") => {
+  switch (type) {
+    case "pop":
+      playSound(800, 50, "square");
+      playSound(600, 30, "sine");
+      break;
+    case "success":
+      playSound(400, 100, "sine");
+      playSound(500, 100, "sine");
+      playSound(600, 150, "sine");
+      break;
+    case "woosh":
+      playSound(300, 200, "sine");
+      playSound(400, 150, "sine");
+      break;
+    case "wow":
+      playSound(600, 150, "sine");
+      setTimeout(() => playSound(800, 200, "sine"), 50);
+      break;
+    case "giggle":
+      playSound(700, 50, "square");
+      setTimeout(() => playSound(500, 50, "square"), 60);
+      setTimeout(() => playSound(600, 100, "square"), 120);
+      break;
+  }
+};
+
 const confettiPalette = ["#FF006E", "#FB5607", "#FFBE0B", "#8338EC", "#3A86FF", "#FF4365", "#FB85FF", "#00D9FF"];
 
 const heroCandyPalette = ["#FF1493", "#FFB6C1", "#FF69B4", "#00CED1", "#7B68EE", "#FFDF00", "#FF6347", "#20B2AA"];
@@ -120,6 +166,8 @@ const CandyExploder = ({ label }: { label: string }) => {
     if (timeoutRef.current) {
       clearTimeout(timeoutRef.current);
     }
+    playSoundEffect("pop");
+    setTimeout(() => playSoundEffect("success"), 100);
     setConfetti(createConfettiPieces());
     timeoutRef.current = setTimeout(() => {
       setConfetti([]);
@@ -206,11 +254,14 @@ const ContactButton = () => (
   </motion.button>
 );
 
-const RacingCar = () => (
+const RacingCar = ({ onClickCar }: { onClickCar: () => void }) => (
   <motion.div
-    className="pointer-events-none fixed top-1/4 left-0 z-40 text-4xl"
+    className="pointer-events-auto fixed top-1/4 left-0 z-40 text-4xl cursor-pointer"
     animate={{ x: ["calc(-100% - 100px)", "calc(100vw + 100px)"] }}
     transition={{ duration: 6, ease: "linear", repeat: Infinity, repeatDelay: 8 }}
+    onClick={() => {
+      onClickCar();
+    }}
   >
     <div className="flex items-center gap-2">
       <span>🏎️</span>
@@ -221,9 +272,9 @@ const RacingCar = () => (
   </motion.div>
 );
 
-const Unicorn = ({ index }: { index: number }) => (
+const Unicorn = ({ index, onClickUnicorn }: { index: number; onClickUnicorn: () => void }) => (
   <motion.div
-    className="pointer-events-none fixed z-30 text-5xl"
+    className="pointer-events-auto fixed z-30 text-5xl cursor-pointer"
     style={{
       left: `${Math.sin(index) * 40 + 50}%`,
       top: `${Math.cos(index) * 30 + 20}%`,
@@ -237,6 +288,10 @@ const Unicorn = ({ index }: { index: number }) => (
       duration: 3 + index * 0.5,
       repeat: Infinity,
       delay: index * 0.8,
+    }}
+    onClick={() => {
+      playSoundEffect("giggle");
+      onClickUnicorn();
     }}
   >
     🦄
@@ -318,10 +373,42 @@ const FloatingStars = () => (
   </>
 );
 
+const HiddenEasterEgg = ({ show }: { show: boolean }) => (
+  <AnimatePresence>
+    {show && (
+      <motion.div
+        initial={{ opacity: 0, scale: 0 }}
+        animate={{ opacity: 1, scale: 1 }}
+        exit={{ opacity: 0, scale: 0 }}
+        className="pointer-events-none fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 text-center"
+      >
+        <motion.div
+          animate={{ rotate: 360, scale: [1, 1.2, 1] }}
+          transition={{ duration: 2, repeat: Infinity }}
+          className="text-8xl"
+        >
+          🎪
+        </motion.div>
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.5 }}
+          className="mt-4 text-2xl font-bold text-[#FF1493]"
+        >
+          YOU FOUND THE MAGIC! 🎉
+        </motion.p>
+      </motion.div>
+    )}
+  </AnimatePresence>
+);
+
 function App() {
   const [activeJar, setActiveJar] = useState<string | null>(null);
   const [questChoice, setQuestChoice] = useState<string | null>(null);
   const [testimonialIndex, setTestimonialIndex] = useState(0);
+  const [titleClicks, setTitleClicks] = useState(0);
+  const [showHiddenMessage, setShowHiddenMessage] = useState(false);
+  const [clickedUnicorns, setClickedUnicorns] = useState(0);
 
   const heroCandy = useMemo(
     () =>
@@ -359,10 +446,11 @@ function App() {
     <main className="relative min-h-screen overflow-hidden bg-gradient-to-br from-[#FFE5F1] via-[#E0F7FF] to-[#F0E5FF] text-[#1a0033]">
       <RandomFireworks />
       <FloatingStars />
-      <RacingCar />
+      <RacingCar onClickCar={() => { playSoundEffect("woosh"); playSoundEffect("wow"); }} />
       {Array.from({ length: 3 }).map((_, i) => (
-        <Unicorn key={i} index={i} />
+        <Unicorn key={i} index={i} onClickUnicorn={() => { setClickedUnicorns(c => c + 1); }} />
       ))}
+      <HiddenEasterEgg show={clickedUnicorns >= 3 || titleClicks >= 5} />
       
       <motion.div
         className="pointer-events-none absolute -left-48 -top-40 h-80 w-80 rounded-full bg-[#FF1493]/40 blur-3xl"
@@ -390,7 +478,11 @@ function App() {
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.08 }}
-              className="text-4xl font-black leading-tight bg-gradient-to-r from-[#FF1493] via-[#8338EC] to-[#00D9FF] bg-clip-text text-transparent drop-shadow-sm md:text-6xl"
+              className="easter-egg-clicker text-4xl font-black leading-tight bg-gradient-to-r from-[#FF1493] via-[#8338EC] to-[#00D9FF] bg-clip-text text-transparent drop-shadow-sm md:text-6xl cursor-pointer"
+              onClick={() => {
+                setTitleClicks(t => t + 1);
+                playSoundEffect(["pop", "success", "giggle"][titleClicks % 3] as any);
+              }}
             >
               The most outrageous sweets universe you can taste without a spacesuit.
             </motion.h1>
